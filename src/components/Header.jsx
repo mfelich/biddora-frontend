@@ -217,7 +217,7 @@ const Header = ({ userId, username, role, onLogout }) => {
             </button>
 
             <button
-              onClick={handleLoginClick}
+              onClick={() => handleLoginClick()}
               className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white font-medium py-2 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg"
             >
               Login

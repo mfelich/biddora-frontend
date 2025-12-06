@@ -9,7 +9,6 @@ const UserSmallCard = ({ userId, username, email }) => {
     navigate(`/user-profile/${userId}`);
   };
 
-  // Generate consistent gradient background based on user ID
   const getGradient = (id) => {
     const gradients = [
       "from-purple-500 to-blue-500",
@@ -37,7 +36,7 @@ const UserSmallCard = ({ userId, username, email }) => {
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           {/* Avatar with gradient */}
-          <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${getGradient(userId)} flex items-center justify-center shadow-md`}>
+          <div className={`w-10 h-10 rounded-xl bg-gradient-to-r ${getGradient(userId)} flex items-center justify-center shadow-md`}>
             <span className="text-white font-bold text-xl">
               {getInitial(username)}
             </span>
@@ -50,7 +49,7 @@ const UserSmallCard = ({ userId, username, email }) => {
             </h3>
             <div className="flex items-center text-gray-600">
               <FaEnvelope className="w-3 h-3 mr-2" />
-              <span className="text-sm">{email}</span>
+              <span className="text-description mr-2">{email}</span>
             </div>
           </div>
         </div>
@@ -58,9 +57,8 @@ const UserSmallCard = ({ userId, username, email }) => {
         {/* View profile button */}
         <button
           onClick={handleClick}
-          className="flex items-center space-x-2 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+          className="secondary-button"
         >
-          <span className="text-sm font-medium">View Profile</span>
           <FaArrowRight className="w-3 h-3" />
         </button>
       </div>

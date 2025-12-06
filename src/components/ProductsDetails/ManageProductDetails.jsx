@@ -86,7 +86,6 @@ const ManageProductDetails = ({ productId, currentProductName, currentProductDes
 
   return (
     <>
-      {/* Glavni dugmići */}
       <div className="bg-white rounded-lg shadow-md p-6 mt-6">
         <h3 className="text-lg font-semibold text-gray-800 mb-4">Manage Product</h3>
         <div className="space-y-3">

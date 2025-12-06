@@ -38,11 +38,10 @@ const CommentSection = ({ productId }) => {
       }
 
       const data = await response.json();
-      // Osiguraj da je data uvijek array
       setComments(Array.isArray(data) ? data : []);
     } catch (err) {
       setError(err.message);
-      setComments([]); // Postavi prazan array ako dođe do greške
+      setComments([]);
     }
   };
 
@@ -54,7 +53,6 @@ const CommentSection = ({ productId }) => {
   const handleSubmitComment = async (e) => {
     e.preventDefault();
 
-    // Validacija
     if (!newComment.trim()) {
       setError("Please enter a comment");
       return;
@@ -93,11 +91,9 @@ const CommentSection = ({ productId }) => {
         throw new Error(errorData.message || "Failed to submit comment");
       }
 
-      // Reset forme i osvježi komentare
       setNewComment("");
       setRating(0);
 
-      // Osvježi listu komentara
       await fetchComments();
     } catch (err) {
       setError(err.message);

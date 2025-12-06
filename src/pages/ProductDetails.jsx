@@ -47,7 +47,7 @@ const ProductDetails = () => {
 
       const data = await response.json();
       setProduct(data);
-      setProductUser(data.userDto);
+      setProductUser(data.user);
       console.log(data);
     } catch (err) {
       setError(err.message);
@@ -77,14 +77,14 @@ const ProductDetails = () => {
           <ProductTags></ProductTags>
           <ProductDescription description={product?.description}></ProductDescription>
           <CommentSection productId={product?.id}></CommentSection>
-          <UserOtherListings userId={product?.userDto?.id}></UserOtherListings>
+          <UserOtherListings userId={product?.user?.id}></UserOtherListings>
         </div>
 
         <div className="w-4/12">
           <UserSmallCard
-            userId={product?.userDto?.id}
-            username={product?.userDto?.username}
-            email={product?.userDto?.email}
+            userId={product?.user?.id}
+            username={product?.user?.username}
+            email={product?.user?.email}
           ></UserSmallCard>
           <ProductInfo
             bidStatus={product?.productStatus}
@@ -93,7 +93,7 @@ const ProductDetails = () => {
           ></ProductInfo>
           <BidSection productId={product?.id} productStatus={product?.productStatus}></BidSection>
 
-          {/* Prikazuj ManageProductDetails samo ako je korisnik vlasnik proizvoda */}
+          {/* Show ManageProductDetails only if user is product owner */}
           {isProductOwner && (
             <ManageProductDetails
               productId={product?.id}

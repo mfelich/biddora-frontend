@@ -8,6 +8,7 @@ import {
   FaTrophy,
   FaCalendarAlt,
 } from "react-icons/fa";
+import { data } from "react-router-dom";
 
 const BidSection = ({ productId, productStatus }) => {
   const socketRef = useRef(null);
@@ -44,7 +45,6 @@ const BidSection = ({ productId, productStatus }) => {
 
       const data = await response.json();
 
-      // Backend vraća Page<Bid> → uzmi content (lista bidova) i totalElements
       setBids(data.content || []);
       setTotalBids(data.totalElements || 0);
 
@@ -64,7 +64,7 @@ const BidSection = ({ productId, productStatus }) => {
   useEffect(() => {
     return () => {
       if (socketRef.current) {
-        console.log("🧹 Closing WebSocket connection on unmount");
+        console.log("Closing WebSocket connection on unmount");
         socketRef.current.close();
         socketRef.current = null;
       }
@@ -92,15 +92,20 @@ const BidSection = ({ productId, productStatus }) => {
         }),
       });
 
+      const data = await response.json().catch(() => null);
+
       if (!response.ok) {
+        console.log(data);
         throw new Error(`Greška prilikom slanja bida: ${response.status}`);
       }
 
+      console.log(response);
       console.log(`✅ Uspješno bidovano na proizvod: ${productId}`);
 
-      setBidAmount(""); // reset input polja
+      setBidAmount("");
     } catch (error) {
-      console.error("❌ Greška prilikom slanja bida:", error);
+      console.log(data);
+      console.error("Greška prilikom slanja bida:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -112,8 +117,7 @@ const BidSection = ({ productId, productStatus }) => {
     const ws = new WebSocket("ws://localhost:8080/ws");
 
     ws.onopen = () => {
-      console.log("✅ Connected to WebSocket");
-      // Pošalji productId backendu (registracija sesije)
+      console.log("Connected to WebSocket");
       ws.send(JSON.stringify({ productId }));
     };
 
@@ -122,19 +126,19 @@ const BidSection = ({ productId, productStatus }) => {
 
       try {
         const newBid = JSON.parse(event.data);
-        console.log("💬 Received new bid:", newBid);
+        console.log("Received new bid:", newBid);
 
         setBids((prevBids) => {
           const updated = [newBid, ...prevBids];
           return updated.sort((a, b) => b.amount - a.amount);
         });
       } catch (error) {
-        console.error("❌ Greška parsiranja WS poruke:", event.data, error);
+        console.error("Greška parsiranja WS poruke:", event.data, error);
       }
     };
 
     ws.onclose = () => {
-      console.log("❌ Disconnected from WebSocket");
+      console.log("Disconnected from WebSocket");
     };
 
     socketRef.current = ws;

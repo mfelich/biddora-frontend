@@ -15,7 +15,6 @@ const SidebarFilter = ({ onFiltersApply }) => {
   };
 
   const handleApplyFilters = () => {
-    // Pozovi callback funkciju sa trenutnim filterima
     if (onFiltersApply) {
       onFiltersApply(filters);
     }
@@ -28,7 +27,6 @@ const SidebarFilter = ({ onFiltersApply }) => {
     };
     setFilters(resetFilters);
     
-    // Također pošalji resetovane filtere parentu
     if (onFiltersApply) {
       onFiltersApply(resetFilters);
     }

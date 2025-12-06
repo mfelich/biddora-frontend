@@ -20,7 +20,7 @@ const UsersView = () => {
       });
       
       if (search) {
-        params.append('search', search); 
+        params.append('username', search); 
       }
 
       const response = await fetch(`http://localhost:8080/api/user/all?${params}`, {
